@@ -1,4 +1,4 @@
-package com.audioan.net;
+package my.net;
 
 public interface Encoder {
 
