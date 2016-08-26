@@ -1,8 +1,8 @@
 package com.audioan.audioan.net.packet;
 
-import com.audioan.net.Decoder;
-import com.audioan.net.Encoder;
-import com.audioan.net.Packet;
+import my.net.codec.Decoder;
+import my.net.codec.Encoder;
+import my.net.Packet;
 
 import java.nio.ByteBuffer;
 
