@@ -82,10 +82,10 @@ public class GenericSocket {
     }
 
     public <T> void push(T packet) {
-        Packet packetAnnotation = packetAnnotation(packet.getClass());
-        Encoder encoder = encoder(packet, packetAnnotation.encoder());
-        encoder.encode(buffer.array());
-        send(buffer.array(), 0, encoder.packetLength());
+//        Packet packetAnnotation = packetAnnotation(packet.getClass());
+//        Encoder encoder = encoder(packet, packetAnnotation.encoder());
+//        encoder.encode(buffer.array());
+//        send(buffer.array(), 0, encoder.packetLength());
     }
 
     public <T> T pull(Class<T> clazz) {
@@ -103,40 +103,40 @@ public class GenericSocket {
 
     @SuppressWarnings("unchecked")
     public Object pullWithin(List<? extends Class<?>> classes, boolean cache) {
-        DatagramPacket udpPacket = UdpPacket.get(buffer.array(), 0, buffer.capacity());
-        try {
-            socket.receive(udpPacket);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        buffer.clear();
-        buffer.limit(udpPacket.getLength());
-        for (Filter filter : filters) {
-            if (!filter.filter(buffer))
-                throw new IllegalStateException();
-        }
-
-        buffer.mark();
-        for (Class<?> clazz : classes) {
-            buffer.reset();
-            Packet packetAnnotation = packetAnnotation(clazz);
-            Decoder decoder = decoder(clazz, packetAnnotation.decoder());
-
-            Object instance = null;
-            if (cache)
-                instance = objectCache.get(clazz);
-
-            if (!cache || instance == null) {
-                instance = decoder.decode(buffer);
-                if (cache)
-                    objectCache.put(instance);
-            } else
-                decoder.decode(buffer, instance);
-
-            if (instance != null)
-                return instance;
-        }
+//        DatagramPacket udpPacket = UdpPacket.get(buffer.array(), 0, buffer.capacity());
+//        try {
+//            socket.receive(udpPacket);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//        buffer.clear();
+//        buffer.limit(udpPacket.getLength());
+//        for (Filter filter : filters) {
+//            if (!filter.filter(buffer))
+//                throw new IllegalStateException();
+//        }
+//
+//        buffer.mark();
+//        for (Class<?> clazz : classes) {
+//            buffer.reset();
+//            Packet packetAnnotation = packetAnnotation(clazz);
+//            Decoder decoder = decoder(clazz, packetAnnotation.decoder());
+//
+//            Object instance = null;
+//            if (cache)
+//                instance = objectCache.get(clazz);
+//
+//            if (!cache || instance == null) {
+//                instance = decoder.decode(buffer);
+//                if (cache)
+//                    objectCache.put(instance);
+//            } else
+//                decoder.decode(buffer, instance);
+//
+//            if (instance != null)
+//                return instance;
+//        }
         return null;
     }
 
